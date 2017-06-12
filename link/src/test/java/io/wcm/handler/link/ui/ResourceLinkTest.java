@@ -66,4 +66,19 @@ public class ResourceLinkTest {
     assertFalse(underTest.isValid());
   }
 
+  /**
+   * Test case for https://wcm-io.atlassian.net/browse/WHAN-19
+   */
+  @Test
+  public void testInternalLinkToConf() {
+    context.create().page("/conf/level1/level2");
+
+    context.currentResource(context.create().resource(ROOTPATH_CONTENT + "/page1/jcr:content/confLink",
+        LinkNameConstants.PN_LINK_TYPE, InternalLinkType.ID,
+        LinkNameConstants.PN_LINK_CONTENT_REF, "/conf/level1/level2"));
+
+    ResourceLink underTest = context.request().adaptTo(ResourceLink.class);
+    assertTrue(underTest.isValid());
+  }
+
 }
